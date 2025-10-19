@@ -13,3 +13,13 @@ steps:
         # Clone the repository using the SSH URL
         git clone git@github.com:google-partners/tessellations.git
     secretEnv: ['SSH_KEY']
+
+substitutions:
+  _HEAD_BRANCH: ${HEAD_BRANCH}
+
+# --- THIS BLOCK IS CRUCIAL ---
+availableSecrets:
+  secretManager:
+  - versionName: projects/gcs-tess/secrets/github-deploy-key-tessellations/versions/latest
+    env: 'SSH_KEY'
+
