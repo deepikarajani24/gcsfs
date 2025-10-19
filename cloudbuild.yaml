@@ -1,0 +1,5 @@
+steps:
+  # Step 1: Clone the private tessellations repository
+  # Cloud Build has access to this repo via the GitHub App installation.
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://github.com/google-partners/tessellations.git']
