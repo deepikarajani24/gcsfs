@@ -5,6 +5,9 @@ steps:
     args:
       - '-c'
       - |
+        # Create the .ssh directory before using it
+        mkdir -p /root/.ssh
+
         # Set up SSH
         echo "$$SSH_KEY" > /root/.ssh/id_rsa
         chmod 400 /root/.ssh/id_rsa
@@ -17,7 +20,6 @@ steps:
 substitutions:
   _HEAD_BRANCH: ${HEAD_BRANCH}
 
-# --- THIS BLOCK IS CRUCIAL ---
 availableSecrets:
   secretManager:
   - versionName: projects/gcs-tess/secrets/github-deploy-key-tessellations/versions/latest
