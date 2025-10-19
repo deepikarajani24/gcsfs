@@ -1,5 +1,15 @@
 steps:
-  # Step 1: Clone the private tessellations repository
-  # Cloud Build has access to this repo via the GitHub App installation.
+  # Step 1: Clone the private tessellations repository using the SSH key
   - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/google-partners/tessellations.git']
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Set up SSH
+        echo "$$SSH_KEY" > /root/.ssh/id_rsa
+        chmod 400 /root/.ssh/id_rsa
+        ssh-keyscan github.com > /root/.ssh/known_hosts
+
+        # Clone the repository using the SSH URL
+        git clone git@github.com:google-partners/tessellations.git
+    secretEnv: ['SSH_KEY']
